@@ -3,21 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejercicios de JavaScript</title>
+    <title>Ejercicios JavaScript</title>
 </head>
 <body>
-    <script src="ejercicios-dom.js"></script>
-    <!-- 1.1 Basándote en el array siguiente, crea una lista ul > li dinámicamente en el HTML que imprima cada uno de los países. -->
-    <ul id="countriesList"></ul>
-    <!-- 1.3 Utiliza el array para crear dinámicamente una lista ul > li de elementos en el div de HTML con el atributo data-function="printHere". -->
-    <div data-function="printHere">
-        <ul id="carsList"></ul>
-    </div>
-    <!-- 1.4 Crea dinámicamente en el HTML una serie de divs que contenga un elemento h4 para el título y otro elemento img para la imagen. -->
-    <div id="countriesContainer"></div>
-    <!-- 1.5 Basándote en el ejercicio anterior. Crea un botón que elimine el último elemento de la serie de divs. -->
-    <button id="removeLastButton">Eliminar último elemento</button>
-    <!-- 1.6 Basándote en el ejercicio anterior. Crea un botón para cada uno de los divs que elimine ese mismo elemento del HTML. -->
-    
+    <!-- Elemento a eliminar -->
+    <p class="fn-remove-me">Bye bye</p>
+
+    <!-- Div para imprimir lista de elementos -->
+    <div data-function="printHere"></div>
+
+    <!-- Script JavaScript -->
+    <script>
+        // 1.1 Crear lista de países dinámicamente
+        const countries = ['Japón', 'Nicaragua', 'Suiza', 'Australia', 'Venezuela'];
+        const countriesListDiv = document.querySelector('[data-function="printHere"]');
+        const countriesListUl = document.createElement('ul');
+        countries.forEach(country => {
+            const listItem = document.createElement('li');
+            listItem.textContent = country;
+            countriesListUl.appendChild(listItem);
+        });
+        countriesListDiv.appendChild(countriesListUl);
+
+        // 1.2 Eliminar elemento con clase .fn-remove-me
+        const elementToRemove = document.querySelector('.fn-remove-me');
+        if (elementToRemove) {
+            elementToRemove.remove();
+        }
+
+        // 1.3 Crear lista de autos dinámicamente
+        const cars = ['Mazda 6', 'Ford fiesta', 'Audi A4', 'Toyota corola'];
+        const carsListDiv = document.createElement('div');
+        const carsListUl = document.createElement('ul');
+        cars.forEach(car => {
+            const listItem = document.createElement('li');
+            listItem.textContent = car;
+            carsListUl.appendChild(listItem);
+        });
+        carsListDiv.appendChild(carsListUl);
+        document.body.appendChild(carsListDiv);
+
+        // 1.4 Crear divs con título e imagen dinámicamente
+        const countriesWithImages = [
+            { title: 'Random title', imgUrl: 'https://picsum.photos/300/200?random=1' }, 
+            { title: 'Random title', imgUrl: 'https://picsum.photos/300/200?random=2' },
+            { title: 'Random title', imgUrl: 'https://picsum.photos/300/200?random=3' },
+            { title: 'Random title', imgUrl: 'https://picsum.photos/300/200?random=4' },
+            { title: 'Random title', imgUrl: 'https://picsum.photos/300/200?random=5' }
+        ];
+        countriesWithImages.forEach(country => {
+            const countryDiv = document.createElement('div');
+            const title = document.createElement('h4');
+            title.textContent = country.title;
+            const image = document.createElement('img');
+            image.src = country.imgUrl;
+            countryDiv.appendChild(title);
+            countryDiv.appendChild(image);
+            document.body.appendChild(countryDiv);
+        });
+
+        // 1.5 Eliminar último elemento de la lista de divs
+        const removeLastButton = document.createElement('button');
+        removeLastButton.textContent = 'Eliminar último div';
+        removeLastButton.addEventListener('click', function() {
+            const divs = document.querySelectorAll('div[data-function="printHere"] div');
+            const lastDiv = divs[divs.length - 1];
+            if (lastDiv) {
+                lastDiv.remove();
+            }
+        });
+        document.body.appendChild(removeLastButton);
+
+        // 1.6 Crear botón para eliminar cada div
+        const divsToRemove = document.querySelectorAll('div[data-function="printHere"] div');
+        divsToRemove.forEach(div => {
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Eliminar div';
+            removeButton.addEventListener('click', function() {
+                div.remove();
+            });
+            div.appendChild(removeButton);
+        });
+    </script>
 </body>
 </html>
